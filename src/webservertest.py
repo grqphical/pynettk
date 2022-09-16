@@ -31,6 +31,7 @@ def API_test(sender, data, user_data):
             pass
         
         dpg.configure_item("Response", default_value=response_data)
+        dpg.configure_item("Ping", default_value=request.elapsed / 1000)
         if request.status_code >= 200 and request.status_code < 300:
             dpg.configure_item("StatusCode", default_value=request.status_code, color=[0,255,0])
         elif request.status_code >= 400 and request.status_code < 600:
