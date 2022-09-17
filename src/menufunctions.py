@@ -16,3 +16,6 @@ def show_about(sender):
 # Open the project's GitHub
 def open_github(sender):
     webbrowser.open("https://github.com/grqphical07/pynettk")
+
+def dashboardview(sender):
+    dpg.configure_item("Dashboard", show=dpg.get_value(sender))

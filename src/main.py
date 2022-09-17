@@ -4,13 +4,14 @@
 
 # Import libraries
 import webservertest
+import dashboard
 import menufunctions as mf
 import dearpygui.dearpygui as dpg
 
 
 # Setup OS window for Dear Py Gui
 dpg.create_context()
-dpg.create_viewport(title='pynettk - Network Development and Debugging Toolkit', width=1280, height=720)
+dpg.create_viewport(title='pynettk - Network Toolkit', width=1280, height=720)
 
 # Load Resources
 width, height, channels, logo = dpg.load_image("resources/logo.png")
@@ -21,6 +22,7 @@ with dpg.texture_registry():
 with dpg.viewport_menu_bar():
     with dpg.menu(label="View"):
         dpg.add_menu_item(label="Webserver Test", check=True, callback=mf.webservertestview, default_value=True)
+        dpg.add_menu_item(label="Dashboard", check=True, callback=mf.dashboardview, default_value=True)
         dpg.add_menu_item(label="About", callback=mf.show_about)
 
     with dpg.menu(label="Settings"):
@@ -28,7 +30,7 @@ with dpg.viewport_menu_bar():
         dpg.add_menu_item(label="App Settings")
 
 # API Test Window
-with dpg.window(label="Webserver Test Tool", width=300, height=600, no_close=True, tag="Webserver Test Tool"):
+with dpg.window(label="Webserver Test Tool", width=300, height=665, no_close=True, tag="Webserver Test Tool"):
     dpg.add_text("Webserver Test Tool")
 
     dpg.add_input_text(label="URL", tag="URL")
@@ -62,19 +64,32 @@ with dpg.window(label="Add Parameter", width=300, height=200, pos=[300,0], show=
 # Create the about window ahead of time
 with dpg.window(label="About pynettk", tag="About", show=False):
     dpg.add_image("logo", width=128, height=128)
-    dpg.add_text("pynettk - Network Debugging and Development Kit")
+    dpg.add_text("pynettk - Network Toolkit")
     dpg.add_text()
     dpg.add_text("Version: 0.1.00")
     dpg.add_text("Created by: grqphical")
     dpg.add_text("")
     dpg.add_button(label="Github", callback=mf.open_github)
 
+# Create the dashboard window
+with dpg.window(label="Dashboard", tag="Dashboard", width=300, height=400,show=True, pos=[300, 0], no_close=True):
+    dpg.add_text("Dashboard")
+    dpg.add_listbox(label="Sites", tag="Sites", items=dashboard.dashboard_data, num_items=12, width=284, callback=dashboard.SelectSite)
+    dpg.add_button(label="Add Site", callback=dashboard.LoadAddSiteWindow)
+    dpg.add_button(label="Remove Site", callback=dashboard.RemoveSite)
+
+# Create the add site window
+with dpg.window(label="Add Site to Dashboard", tag="AddSite", width=200, show=False, pos=[300, 200]):
+    dpg.add_text("Add Site to Dashboard")
+    dpg.add_input_text(label="URL", tag="AddSite.URL")
+    dpg.add_button(label="Add", callback=dashboard.AddSite)
+
 # Run the application
 dpg.set_viewport_small_icon("resources/logo.ico")
 dpg.set_viewport_large_icon("resources/logo.ico")
-dpg.show_style_editor()
 dpg.setup_dearpygui()
 dpg.show_viewport()
+dashboard.InitDashboard()
 dpg.start_dearpygui()
 
 dpg.destroy_context()
