@@ -39,7 +39,7 @@ def API_test(sender, data, user_data):
         else:
             dpg.configure_item("StatusCode", default_value=request.status_code)
     elif method == "POST":
-        request = requests.get(dpg.get_value("URL"))
+        request = requests.post(dpg.get_value("URL"))
         response_data = ""
         try:
             request_json = request.json()

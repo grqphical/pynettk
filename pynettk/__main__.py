@@ -3,9 +3,7 @@
 #####################################################
 
 # Import libraries
-import webservertest
-import dashboard
-import menufunctions as mf
+from . import webservertest, dashboard, menufunctions
 import dearpygui.dearpygui as dpg
 
 
@@ -21,9 +19,9 @@ with dpg.texture_registry():
 # Create menu bar on the window
 with dpg.viewport_menu_bar():
     with dpg.menu(label="View"):
-        dpg.add_menu_item(label="Webserver Test", check=True, callback=mf.webservertestview, default_value=True)
-        dpg.add_menu_item(label="Dashboard", check=True, callback=mf.dashboardview, default_value=True)
-        dpg.add_menu_item(label="About", callback=mf.show_about)
+        dpg.add_menu_item(label="Webserver Test", check=True, callback=menufunctions.webservertestview, default_value=True)
+        dpg.add_menu_item(label="Dashboard", check=True, callback=menufunctions.dashboardview, default_value=True)
+        dpg.add_menu_item(label="About", callback=menufunctions.show_about)
 
     with dpg.menu(label="Settings"):
         dpg.add_menu_item(label="Style Settings")
@@ -69,7 +67,7 @@ with dpg.window(label="About pynettk", tag="About", show=False):
     dpg.add_text("Version: 0.1.00")
     dpg.add_text("Created by: grqphical")
     dpg.add_text("")
-    dpg.add_button(label="Github", callback=mf.open_github)
+    dpg.add_button(label="Github", callback=menufunctions.open_github)
 
 # Create the dashboard window
 with dpg.window(label="Dashboard", tag="Dashboard", width=300, height=400,show=True, pos=[300, 0], no_close=True):
